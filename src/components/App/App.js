@@ -1,9 +1,8 @@
 import React from "react";
-// import logo from './logo.svg';
 import "./App.css";
-import { SearchBar } from "../SearchBar/SearchBar";
-import { SearchResults } from "../SearchResults/SearchResults";
-import { Playlist } from "../Playlist/Playlist";
+import SearchBar from "../SearchBar/SearchBar";
+import SearchResults from "../SearchResults/SearchResults";
+import Playlist from "../Playlist/Playlist";
 
 class App extends React.Component {
   constructor(props) {
@@ -25,7 +24,7 @@ class App extends React.Component {
         </h1>
         <div className="App">
           <SearchBar />
-          <div class="App-playlist">
+          <div className="App-playlist">
             <SearchResults searchResults={this.state.searchResults} />
             <Playlist />
           </div>
