@@ -28,9 +28,7 @@ class App extends React.Component {
           id: 3,
         },
       ],
-
       playlistName: "Brandon's bad ass playlist",
-
       playlistTracks: [
         {
           name: "Futile Devices",
@@ -54,22 +52,33 @@ class App extends React.Component {
     };
     this.addTrack = this.addTrack.bind(this);
     this.removeTrack = this.removeTrack.bind(this);
+    this.updatePlaylistName = this.updatePlaylistName.bind(this);
   }
 
   addTrack(track) {
+    // gets the current track list from the playlistTracks
     let tracks = this.state.playlistTracks;
+    // if the track has the same id as another track in the playlist
     if (tracks.find((savedTrack) => savedTrack.id === track.id)) {
+      // do nothing
       return;
     }
-
+    // otherwise, add that track to the playlist
     tracks.push(track);
+    // set as the new playlistTracks
     this.setState({ playlistTracks: tracks });
   }
 
   removeTrack(track) {
     let tracks = this.state.playlistTracks;
+    // filters out the track from the playlistTracks
     tracks = tracks.filter((currentTrack) => currentTrack.id !== track.id);
+    // set as the new playlistTracks
     this.setState({ playlistTracks: tracks });
+  }
+
+  updatePlaylistName(newName) {
+    this.setState({ playlistName: newName });
   }
 
   render() {
