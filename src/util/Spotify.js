@@ -2,7 +2,7 @@ import id from "./pw";
 
 let accessToken = "";
 
-const redirectURI = "http://localhost:3000/";
+const redirectURI = "http://brandon-jamming.surge.sh";
 
 const Spotify = {
   getAccessToken() {
