@@ -15,50 +15,45 @@ class App extends React.Component {
     };
     this.addTrack = this.addTrack.bind(this);
     this.removeTrack = this.removeTrack.bind(this);
-    this.updatePlaylistName = this.updatePlaylistName.bind(this);
     this.savePlaylist = this.savePlaylist.bind(this);
     this.search = this.search.bind(this);
+    this.updatePlaylistName = this.updatePlaylistName.bind(this);
   }
 
+  // Adds track from Search Results to Playlist
   addTrack(track) {
-    // gets the current track list from the playlistTracks
     let tracks = this.state.playlistTracks;
-    // if the track has the same id as another track in the playlist
-    if (tracks.find((savedTrack) => savedTrack.id === track.id)) {
-      // do nothing
-      return;
-    }
-    // otherwise, add that track to the playlist
     tracks.push(track);
-    // set as the new playlistTracks
     this.setState({ playlistTracks: tracks });
   }
 
+  // Removes track from Playlist by filtering out track id from playlistTracks
   removeTrack(track) {
     let tracks = this.state.playlistTracks;
-    // filters out the track from the playlistTracks
-    tracks = tracks.filter((currentTrack) => currentTrack.id !== track.id);
-    // set as the new playlistTracks
+    tracks = tracks.filter((current) => current.id !== track.id);
     this.setState({ playlistTracks: tracks });
   }
 
-  updatePlaylistName(newName) {
-    this.setState({ playlistName: newName });
+  // Sends search term request to spotify and returns results of search in the search results panel
+  search(term) {
+    Spotify.search(term).then((searchResults) => {
+      this.setState({ searchResults: searchResults });
+    });
   }
 
+  // Updates the name of the Playlist
+  updatePlaylistName(name) {
+    this.setState({ playlistName: name });
+  }
+
+  // Saves playlist name and tracks to user's account
   savePlaylist() {
     const trackURIs = this.state.playlistTracks.map((track) => track.uri);
-    Spotify.savePlaylist(this.state.playlistName, trackURIs).then.then(() => {
+    Spotify.savePlaylist(this.state.playlistName, trackURIs).then(() => {
       this.setState({
         playlistName: "New Playlist",
         playlistTracks: [],
       });
-    });
-  }
-
-  search(term) {
-    Spotify.search(term).then((searchResults) => {
-      this.setState({ searchResults: searchResults });
     });
   }
 

@@ -1,6 +1,4 @@
-// import id from "./pw";
-
-let id = ;
+import id from "./pw";
 
 let accessToken = "";
 
@@ -23,9 +21,8 @@ const Spotify = {
       window.history.pushState("Access Token", null, "/");
       return accessToken;
     } else {
-      window.location(
-        `https://accounts.spotify.com/authorize?client_id=${id}&response_type=token&scope=playlist-modify-public&redirect_uri=${redirectURI}`
-      );
+      const accessUrl = `https://accounts.spotify.com/authorize?client_id=${id}&response_type=token&scope=playlist-modify-public&redirect_uri=${redirectURI}`;
+      window.location = accessUrl;
     }
   },
 
@@ -43,10 +40,11 @@ const Spotify = {
         if (!jsonResponse.tracks) {
           return [];
         }
+
         return jsonResponse.tracks.items.map((track) => ({
           id: track.id,
           name: track.name,
-          artist: track.artist[0].name,
+          artist: track.artists[0].name,
           album: track.album.name,
           uri: track.uri,
         }));
