@@ -1,4 +1,6 @@
-import id from "./pw";
+// import id from "./pw";
+
+let id = ;
 
 let accessToken = "";
 
@@ -27,16 +29,13 @@ const Spotify = {
     }
   },
 
-  search(searchTerm) {
+  search(term) {
     const accessToken = Spotify.getAccessToken();
-    return fetch(
-      `https://api.spotify.com/v1/search?type=track&q=${searchTerm}`,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-    )
+    return fetch(`https://api.spotify.com/v1/search?type=track&q=${term}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
       .then((response) => {
         return response.json();
       })
@@ -47,8 +46,8 @@ const Spotify = {
         return jsonResponse.tracks.items.map((track) => ({
           id: track.id,
           name: track.name,
-          artist: track.artist,
-          album: track.album,
+          artist: track.artist[0].name,
+          album: track.album.name,
           uri: track.uri,
         }));
       });
