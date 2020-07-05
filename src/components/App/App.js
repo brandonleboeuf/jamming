@@ -21,10 +21,19 @@ class App extends React.Component {
   }
 
   // Adds track from Search Results to Playlist
-  addTrack(track) {
+  addTrack(song) {
     let tracks = this.state.playlistTracks;
-    tracks.push(track);
+    if (tracks.find((savedTrack) => savedTrack.id === song.id)) {
+      return;
+    }
+
+    tracks.push(song);
     this.setState({ playlistTracks: tracks });
+
+    //Once the track is added to the playlist, it is removed from the search results
+    let search = this.state.searchResults;
+    search = search.filter((sameSong) => sameSong.id !== song.id);
+    this.setState({ searchResults: search });
   }
 
   // Removes track from Playlist by filtering out track id from playlistTracks
